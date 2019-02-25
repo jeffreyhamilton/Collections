@@ -64,6 +64,33 @@ namespace Collections
                 Console.WriteLine(number);
             }
 
+            //how to sort a list
+            students.Sort();
+            //this list is now sorted alphabetically. 
+            //The sort method will choose the most obvious way to sort a list if not given a specific sort method
+
+
+            //below we create an object list of class Student and students to it and write them out.
+            /*Becuase of how we worte the class it sorts by name then by grade 
+             * so names that are the same will be arraganged with lowest grade first
+             */
+            List<Student> studentsFromClass = new List<Student>
+            {
+                new Student() {Name = "Sally" , GradeLevel = 3},
+                new Student() {Name = "Bob" , GradeLevel = 3},
+                new Student() {Name = "Sally" , GradeLevel = 2},
+                new Student() {Name = "Adam" , GradeLevel = 3},
+                new Student() {Name = "Craig" , GradeLevel = 3},
+                new Student() {Name = "Craig" , GradeLevel = 2}
+            };
+
+            studentsFromClass.Sort();
+
+            foreach(Student individual in studentsFromClass)
+            {
+                Console.WriteLine($"{individual.Name} is in grade {individual.GradeLevel}");
+            }
+
         }
 
 
@@ -80,6 +107,27 @@ namespace Collections
             }
             return returnList;
 
+        }
+
+        /*The following class Student implements the IComparable interface.  It then pass in the type parameter Student.
+         * This is specifiying that Student can be compared with other objects of type Student.
+         */
+        class Student : System.IComparable<Student>
+        {
+            public string Name { get; set; }
+            public int GradeLevel { get; set; }
+
+            public int CompareTo (Student that)
+            {
+                int result = this.Name.CompareTo(that.Name);
+
+                if(result == 0)
+                {
+                    result = this.GradeLevel.CompareTo(that.GradeLevel);
+                }
+
+                return result;
+            }
         }
     }
 }
